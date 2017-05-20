@@ -1,0 +1,125 @@
+﻿@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
+
+@{
+    Page.Title = "All Pending Requisitions";
+    //Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Sandi
+}
+
+
+@model PagedList.IPagedList<Team7ADProjectMVC.Requisition>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+
+<div class="container-fluid">
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button> <a class="navbar-brand" href="#">Search: </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav"></ul>
+                        <form class="navbar-form navbar-left" role="form" action="/Head/ApproveRequisition" method="post">
+                            <div class="form-group">
+                                <input id="SearchString" type="text" class="form-control" name="SearchString" />
+                            </div>
+                            <input type="submit" class="btn btn-default" value="Search"/>
+                            <input type="submit" class="btn btn-default"  value="Show All" onclick="window.location.href = '/Head/ApproveRequisition'"/>
+                            
+                         </form>
+
+
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Employee Name
+                </th>
+                <th>
+                    Ordered Date
+                </th>
+                <th>
+                    Item List
+                </th>
+                <th>
+                    Action
+                </th>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr class="clickable-row" data-href="EmployeeRequisition/@item.RequisitionId">
+                    <td>
+                        @item.Employee.EmployeeName
+                    </td>
+                    <td>
+                     @{
+                         string[] D = item.OrderedDate.ToString().Split(' ');
+                         string[] sd = D[0].Split('/');
+                         ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2];
+                    }
+                    @ViewBag.showDate
+                    </td>
+                    <td>
+                        @foreach (var item2 in item.RequisitionDetails)
+                        { @item2.Inventory.Description <br> }
+                        <br>
+                    </td>
+                    <td>
+                        <form id="form1" action="/Head/MarkAsCollected"  onsubmit="return confirm('Are you sure you confirm?');">
+                            <input type="hidden" value="@item.RequisitionId" name="rid" />
+                            <input type="hidden" value="" name="textcomments" />
+                            <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
+                            <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
+                        </form>
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+    <br />
+    <center>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("ApproveRequisition",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </center>
+
+
+
+</div>
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu11").className += "active";
+});
+</script>

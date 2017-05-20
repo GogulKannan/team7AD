@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Team7ADProjectMVC.DisbursementDetail>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    DisbursementDetail item2 = new DisbursementDetail();
+    Page.Title = "Reallocation of Disbursements";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    int prodmax = 0;
+    int formcount=0;
+    string formname = "form"+formcount;
+    //Author: Edwin
+}
+
+<form id="form_@formcount" action="Reallocate">
+<div class="container-fluid">
+    <div class="row">
+            @if (Model.Count() > 0)
+            {
+                <h5>Auto-allocations have been done in order of requisition. Any manual re-allocation must be performed before: <br />
+                (1) a new retrieval list is generated <br /> 
+                (2) the disbursement has been collected</h5>
+            foreach (var item in Model)
+            {
+
+            <table class="table">
+                @if (item.ItemNo != item2.ItemNo)
+                {
+                <thead>
+                    <tr class="active">
+                        <th>@item.ItemNo - @item.Inventory.Description</th>
+
+                    </tr>
+                    <tr class="info">
+                        <th class="col-md-2">Department</th>
+                        <th class="col-md-2">Prepared Quantity</th>
+                        <th class="col-md-2">Required Quantity (Max)</th>
+                        <th class="col-md-2">Adjusted Quantity</th>
+                    </tr>
+                </thead>
+                }
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">@item.DisbursementList.Department.DepartmentName</td>
+                        <td class="col-md-2">@item.PreparedQuantity </td>
+                        <td class="col-md-2">
+                            @{
+                            foreach (var itemxyz in ViewBag.MaxQuantityOfEachItem)
+                            {
+                            foreach (var itemabc in itemxyz.RequisitionDetails)
+                            {
+                            if(itemabc.ItemNo == item.ItemNo && itemxyz.DepartmentId == item.DisbursementList.DepartmentId)
+                            {
+                            prodmax = itemabc.OutstandingQuantity;
+                            <p>@prodmax</p>
+                            <input type="hidden" name="departmentId" value="@item.DisbursementList.Department.DepartmentId" />
+                            <input type="hidden" name="disbursementListId" value="@item.DisbursementListId" />
+                            <input type="hidden" name="disbursementDetailId" value="@item.DisbursementDetailId" />
+                            <input type="hidden" name="itemNo" value="@item.ItemNo" />
+                            <input type="hidden" name="preparedQuantity" value="@item.PreparedQuantity" />
+                            }
+                            }
+                            }
+
+                            }
+                        </td>
+                        <td class="col-md-2"><input class="form-control" name="adjustedQuantity" type="number" max="@prodmax" value="@item.PreparedQuantity"/>
+                         <span class="text-danger field-validation-error" data-valmsg-for="preparedQuantity" data-valmsg-replace="true"><span for="preparedQuantity" class="">Value must be less than or equal to @prodmax</span></span>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+                                    { item2 = item; formcount++; }
+
+                                }
+                                <input type="submit" class="btn btn-primary pull-right" value="Allocate" />
+                                }
+                                else { <div><h4>There are no items to reallocate at this time</h4></div> }
+        
+    </div>
+</div>
+</form>
+
+
+@if (ViewBag.PrepQtyException != null)
+{
+    <!-- Show warning message -->
+    <div id="ErrorMessage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">There was a problem..</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Please ensure that the <b>total adjusted quantity</b> matches the <b>total prepared quantity</b> for each item.</h5>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function ShowModal() {
+            $('#ErrorMessage').modal('toggle');
+        });
+    </script>
+}
+<script>
+$(document).ready(function(){
+    document.getElementById("menu2").className += "active";
+});
+</script>

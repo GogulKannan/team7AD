@@ -1,0 +1,125 @@
+﻿@model Team7ADProjectMVC.Delivery
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Receive & View Order";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    PurchaseDetail q = new PurchaseDetail();
+
+    //Author: Edwin
+}
+
+
+<h2>Supplier: @Model.PurchaseOrder.Supplier.SupplierName (@Model.PurchaseOrder.Supplier.SupplierCode ) </h2>
+<form role="form" id="form1" action="../AcceptDelivery">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">
+                <br />
+                <label>Delivery Order No.</label>
+            </div>
+            <div class="col-md-4">
+                <input type="hidden" name="deliveryId" value="@Model.DeliveryId" />
+                <input type="text" class="form-control" name="deliveryRefNo" placeholder="Delivery Order No. (Required)" value="@Model.DeliveryOrderNo" required />
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2">
+            <label>Delivery Date</label>
+        </div>
+        <div class="col-md-3">
+            @DateTime.Today.ToString("dd-MMM-yyyy")
+        </div>
+        
+    </div>
+    <div class="form-group">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-md-1">
+                        Item No.
+                    </th>
+                    <th class="col-md-3">
+                        Description
+                    </th>
+                    <th class="col-md-1">
+                        Ordered Quantity
+                    </th>
+                    <th class="col-md-1">
+                        Received Quantity
+                    </th>
+                    <th>
+                        Remarks
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DeliveryDetails)
+                {
+                <tr>
+                    <td>
+                        @item.ItemNo
+                    </td>
+                    <td>
+                        @item.Inventory.Description
+                    </td>
+                    <td>
+                        @{ q = (from x in item.Delivery.PurchaseOrder.PurchaseDetails
+                                     where x.ItemNo == item.ItemNo
+                                     && x.PurchaseOrderId == item.Delivery.PurchaseOrderId
+                                     select x).FirstOrDefault(); }
+                        @q.Quantity
+                    </td>
+                    <td>
+                        <input type="hidden" name="deliveryDetailId" value="@item.DeliveryDetailid" />
+                        <input type="hidden" name="itemNo" value="@item.ItemNo"/>
+                        <input type="number" class="form-control" name="quantity" value="@q.Quantity" />
+                    </td>
+                    <td>
+                        <input type="text" name="remarks" class="form-control" value="@item.Remarks" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-4 pull-right">
+
+
+            <button class="btn btn-primary" id="submitbutton" type="submit">
+                Confirm Receipt of Goods
+            </button>
+            <button class="btn btn-default" onclick="window.history.back()">
+                Back
+            </button>
+
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+        $(document).ready(function () {
+            document.getElementById("menu4").className += "active";
+        });
+
+</script>
+
+@if (Model.DeliveredDate != null)
+{
+    <script>
+    $('#form1 input[type="number"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+    $('#form1 input[type="text"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+
+        $('#submitbutton').attr('disabled', 'disabled');
+
+    </script>
+}

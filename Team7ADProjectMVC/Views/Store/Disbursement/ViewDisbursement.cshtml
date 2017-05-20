@@ -1,0 +1,159 @@
+﻿@model Team7ADProjectMVC.DisbursementList
+
+
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Disbursement for " + @ViewBag.disbursementListInfo.Department.DepartmentName;
+    int? disbursementListId = null;
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Edwin
+}
+
+
+
+
+<h2>Collection Point: @Model.Department.CollectionPoint.PlaceName ( @Model.Department.CollectionPoint.CollectTime ) </h2>
+<hr />
+<div class="row">
+@if (Model.Status == "Processing")
+{
+    <form  id="formDate" action="../UpdateDateOfDelivery" method="get">
+        <div class="col-md-2">Delivery Date</div>
+        <input type="hidden" name="disbursementListId" value="@Model.DisbursementListId" />
+        <div class="form-group col-md-3">
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" placeholder="Date Ordered" name="deliveryDateString" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <input type="submit" class="btn btn-info pull-right noprint" value="Update Delivery Date" />
+            </div>
+</form>
+}
+else
+{
+    <div class="col-md-2"><h4>Delivery Date</h4></div>
+    <div class="col-md-3"><h4>@Model.DeliveryDate.Value.ToString("dd/MM/yyyy")</h4></div>
+}
+</div>
+
+<div class="row pull-right">
+    <a href="#" class="btn btn-success noprint dragTxt" onclick="window.print()">
+        <span class="glyphicon glyphicon-print"></span> Print
+    </a>
+    <button class="btn btn-default noprint" type="button" onclick="ClearTB()">Clear Form</button>
+</div>
+<form role="form" id="form1" action="../UpdateDisbursement">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Prepared Quantity
+                </th>
+                <th>
+                    Received Quantity
+                </th>
+                <th>
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.DisbursementDetails)
+        {
+            <tr>
+                <td class="col-md-3">
+                    @item.ItemNo @item.Inventory.Description
+                </td>
+                <td class="col-md-2">
+                    @item.PreparedQuantity
+                </td>
+                <td class="col-md-2">
+                    @{ disbursementListId = item.DisbursementListId;}
+                    <input type="hidden" value="@item.ItemNo" name="itemNo" />
+                    <input type="hidden" value="@item.PreparedQuantity" name="originalPreparedQty" />
+                    <input type="number" class="form-control" name="adjustedQuantity" value="@item.DeliveredQuantity" max="@item.PreparedQuantity"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="remarks" />
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <input type="hidden" value="@disbursementListId" name="disbursementListId" />
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label for="inputForRepresentative">
+                            Department Representative:
+                        </label>
+                    </div>
+                    <div class="col-lg-5">
+                        @ViewBag.Representative.EmployeeName (Tel no: @ViewBag.Representative.PhNo)
+                    </div>
+                </div>
+                <br />
+                <br />
+            </div>
+            <div class="print">
+                <label>Signature: ________________________________</label>
+            </div>
+            <div class="pull-right">
+                <button id="submitbutton" class="btn btn-primary noprint">
+                    Update
+                </button>
+
+                <button class="btn btn-default noprint" type="button" onclick="window.history.back()">
+                    Cancel
+                </button>
+            </div>
+            <br />
+            <br />
+
+        </div>
+    </div>
+</form>
+@if (Model.Status == "Completed")
+{
+<script>
+    $('#form1 input[type="number"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+    $('#form1 input[type="text"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+      
+    });
+        
+        $('#submitbutton').attr('disabled', 'disabled');
+    
+</script>
+}
+<script>
+    $(document).ready(function () {
+        document.getElementById("menu2").className += "active";
+
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY',
+            date: '@Model.DeliveryDate',
+            minDate: moment().millisecond(0).second(0).minute(0).hour(0)
+        });
+    });
+
+    function ClearTB() {
+        $(document).find('input[type=text]').val('');
+        $(document).find('input[type=number]').val('');
+    }
+
+</script>

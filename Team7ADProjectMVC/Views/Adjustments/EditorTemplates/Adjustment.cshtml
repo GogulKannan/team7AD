@@ -1,0 +1,40 @@
+﻿@model Team7ADProjectMVC.Adjustment
+
+
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="container-fluid" style="display:none">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron row">
+                <h3>Create New</h3>
+                <hr>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AdjustmentDate, "Adjustment Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.AdjustmentDate, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                        @Html.ValidationMessageFor(model => model.AdjustmentDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmployeeId, "Employee Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.EmployeeId, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                        @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+

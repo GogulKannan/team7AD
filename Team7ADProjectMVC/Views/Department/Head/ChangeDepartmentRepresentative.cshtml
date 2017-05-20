@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Employee>
+@{
+    Page.Title = "Change Department Representative";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Sandi
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <h3>Department : <b>@currentEmployee.Department.DepartmentName</b> </h3>
+    </div>
+</div>
+<div class="row"></div>
+<div class="row">
+    <div class="col-md-5">
+        <h3> Current Representative : <b>@ViewBag.currentRep.EmployeeName</b> </h3>
+    </div>
+</div>
+
+<div class="row"><br/></div>
+<div class="row">
+    <form role="form" action="/Head/ManageCangeRep">
+        <div class="row">
+            <div class="col-lg-4 col-xs-12">
+                <h3>Select one Employee to delegate : </h3>
+                <div>
+                    <select id="empPicker" name="empId"
+                            class="selectpicker show-tick form-control"
+                            data-live-search="true" title="Select employee to delegate" required>
+                        @foreach (var emp in ViewBag.employeeList)
+                        {
+                            <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                        }
+
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-success btn-lg" name="changeRep" value="changeRep" id="changeRepButton" >
+                    Update
+                </button>
+            </div>
+        </div>
+    </form>
+   </div>
+
+
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu16").className += "active";
+});
+</script>

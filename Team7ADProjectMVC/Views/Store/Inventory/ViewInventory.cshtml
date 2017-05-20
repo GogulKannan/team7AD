@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<Team7ADProjectMVC.Inventory>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Inventory";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+@using PagedList.Mvc;
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-default">
+        <form class="navbar-form row" role="form" action="/Store/Inventory" method="get">
+            <div class="form-group col-md-4">
+
+                <select id="searchByCategory" name="id"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Category">
+                    @foreach (Category c in ViewBag.Cat)
+                    {
+                        <option value="@c.CategoryId">@c.CategoryName</option>
+                    }
+                </select>
+
+            </div>
+
+            <button class="btn btn-success" type="submit">
+                Search
+            </button>
+            <button class="btn btn-primary" type="button" onclick="window.location.href='/Store/New'">
+                Create
+            </button>
+            <button class="btn btn-default" type="button" onclick="window.location.href='/Store/Inventory'">
+                Show All
+            </button>
+
+        </form>
+    </nav>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Item Code
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var StockCard in Model)
+                {
+                    <tr class="clickable-row" data-href="InventoryItem/@StockCard.ItemNo">
+                        <td>@StockCard.ItemNo</td>
+                        <td>@StockCard.Description</td>
+                        <td>@StockCard.Category.CategoryName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Inventory",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</center>
+
+<script type="text/javascript">
+       $(document).ready(function ($) {
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $('#searchByCategory').selectpicker('val', getUrlVars()["id"]);
+        document.getElementById("menu5").className += "active";
+        });
+</script>

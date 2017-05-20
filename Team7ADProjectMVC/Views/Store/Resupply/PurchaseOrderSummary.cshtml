@@ -1,0 +1,167 @@
+﻿@model IEnumerable<Team7ADProjectMVC.PurchaseOrder>
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Purchase Order Summary";
+    ProjectEntities db = new ProjectEntities();
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    string supplier = null;
+    string employee = null;
+    string approvedBy = null;
+    string printLine = null;
+
+    //Author: Edwin
+}
+
+<nav class="navbar navbar-default">
+    <form class="navbar-form navbar-left" role="form" action="SearchPurchaseOrderSummary" method="get">
+        <div class="form-group">
+            
+                <select id="searchByStatus" name="orderStatus"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Order Status">
+                    <option value="Approved">Approved</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            
+        </div>
+        <div class="form-group">
+            
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" placeholder="Date Ordered" name="dateOrderedString" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            
+        </div>
+        <div class="form-group">
+            
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" placeholder="Date Approved" name="dateApprovedString" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            
+        </div>
+        
+            <button class="btn btn-success" type="submit">
+                Search
+            </button>
+        @if ((bool)currentEmployee.Role.MakePurchaseOrder)
+        {
+            <button class="btn btn-primary" type="button" onclick="window.location.href='../StorePO/GeneratePO'">
+                Create New
+            </button>
+            <button class="btn btn-info" type="button" onclick="window.location.href = '../StorePO/CreateAdhocPurchaseOrder'">
+                Create Ad-hoc
+            </button>
+        }
+    </form>
+</nav>
+
+    
+        @if (ViewBag.ResultCount != null)
+        {
+            if (ViewBag.ResultCount == 0)
+            { <div class="alert alert-info"> <h5>Your search returned @ViewBag.ResultCount result(s). Showing all results.</h5>  </div>}
+            else {
+                <div class="alert alert-info"><h5>Your search returned @ViewBag.ResultCount result(s).</h5>  </div>}
+
+        }
+   
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-1">
+                    PO Number
+                </th>
+                <th class="col-md-2">
+                    Supplier (Supp.Code)
+                </th>
+                <th class="col-md-2">
+                    Ordered By (Date)
+                </th>
+                <th class="col-md-1">
+                    Status
+                </th>
+                <th class="col-md-2">
+                    Approved By (Date)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="clickable-row" data-href="PurchaseOrder/@item.PurchaseOrderId">
+                    <td>
+                        @item.PurchaseOrderId
+                    </td>
+                    <td>
+                        @{supplier = db.Suppliers.Find(item.SupplierId).SupplierName;}
+                        @supplier
+                    </td>
+                    <td>
+                        @if (item.Employee1 != null)
+                        {
+                            employee = item.Employee1.EmployeeName;
+                        }
+                        @employee (@item.OrderDate.Value.ToString("dd/MM/yyyy"))
+                    </td>
+                    <td>
+                        @item.OrderStatus
+                    </td>
+                    <td>
+
+                        @{
+                            if (item.Employee != null)
+                            {
+                                approvedBy = item.Employee.EmployeeName;
+                                printLine = approvedBy + " (" + item.AuthorizedDate.Value.ToString("dd/MM/yyyy") + ")";
+                            }
+                            else
+                            {
+                                printLine = null;
+                            }
+                        }
+                        @printLine
+                    </td>
+                </tr>
+                            }
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+
+            $('#datetimepicker2').datetimepicker({ format: 'DD/MM/YYYY' });
+        });
+
+        $(document).ready(function ($) {
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+                
+        $('#searchByStatus').selectpicker('val', getUrlVars()["orderStatus"]);
+        var date1 = unescape(getUrlVars()["dateOrderedString"]);
+        var date2 = unescape(getUrlVars()["dateApprovedString"]);
+        $('#datetimepicker1').data("DateTimePicker").date(date1);
+        $('#datetimepicker2').data("DateTimePicker").date(date2);
+        document.getElementById("menu3").className += "active";
+        });
+    </script>

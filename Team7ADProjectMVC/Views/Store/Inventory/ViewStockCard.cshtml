@@ -1,0 +1,82 @@
+﻿@model Team7ADProjectMVC.Inventory
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Stock Card - " + @ViewBag.inv.ItemNo + " " + @ViewBag.inv.Description;
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2"><label>Category</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Category.CategoryName)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Bin No.</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.BinNo)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Unit of Measure</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Measurement.UnitOfMeasurement)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Quantity</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Quantity) (On Hold: @Html.DisplayFor(model => model.HoldQuantity))</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Reorder Level</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.ReorderLevel) (Reorder quantity: @Html.DisplayFor(model => model.ReorderQuantity))</div>
+    </div>
+    <div class="row">
+        <button class="btn btn-info pull-right" onclick="window.location.href = '../Edit/@ViewBag.inv.ItemNo'">Edit</button>
+    </div>
+    <hr />
+
+
+    <div>
+        <h3>Stock Movements</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Dept/Supplier
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.sCard)
+                {
+                    <tr>
+                        <td>
+                            @item.Date
+                        </td>
+                        <td>
+                            @item.Dept_Supplier
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.AdjustedQuantity
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script>
+$(document).ready(function(){
+    document.getElementById("menu5").className += "active";
+});
+</script>

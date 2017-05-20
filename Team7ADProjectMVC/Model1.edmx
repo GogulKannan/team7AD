@@ -1,0 +1,2131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adjustment">
+          <Key>
+            <PropertyRef Name="AdjustmentId" />
+          </Key>
+          <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdjustmentDate" Type="date" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="SupervisorId" Type="int" />
+          <Property Name="SupervisorAuthorizedDate" Type="date" />
+          <Property Name="HeadId" Type="int" />
+          <Property Name="HeadAuthorizedDate" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AdjustmentDetail">
+          <Key>
+            <PropertyRef Name="AdjustmentDetailId" />
+          </Key>
+          <Property Name="AdjustmentDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdjustmentId" Type="int" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Reason" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CollectionPoints">
+          <Key>
+            <PropertyRef Name="CollectionPointId" />
+          </Key>
+          <Property Name="CollectionPointId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceName" Type="varchar" MaxLength="100" />
+          <Property Name="CollectTime" Type="time" Precision="7" />
+          <Property Name="EmployeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Delegate">
+          <Key>
+            <PropertyRef Name="DelegateId" />
+          </Key>
+          <Property Name="DelegateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ActualEndDate" Type="date" />
+          <Property Name="ApprovedBy" Type="int" />
+          <Property Name="ApprovedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryOrderNo" Type="varchar" MaxLength="50" />
+          <Property Name="PurchaseOrderId" Type="int" />
+          <Property Name="DeliveredDate" Type="date" />
+          <Property Name="ReceivedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DeliveryDetail">
+          <Key>
+            <PropertyRef Name="DeliveryDetailid" />
+          </Key>
+          <Property Name="DeliveryDetailid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Remarks" Type="varchar" MaxLength="250" />
+          <Property Name="DeliveryId" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="30" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="100" />
+          <Property Name="ContactName" Type="varchar" MaxLength="100" />
+          <Property Name="PhNo" Type="varchar" MaxLength="50" />
+          <Property Name="FaxNo" Type="varchar" MaxLength="50" />
+          <Property Name="HeadId" Type="int" />
+          <Property Name="CollectionPointId" Type="int" />
+          <Property Name="RepresentativeId" Type="int" />
+        </EntityType>
+        <EntityType Name="DisbursementDetail">
+          <Key>
+            <PropertyRef Name="DisbursementDetailId" />
+          </Key>
+          <Property Name="DisbursementDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisbursementListId" Type="int" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="PreparedQuantity" Type="int" />
+          <Property Name="DeliveredQuantity" Type="int" />
+          <Property Name="Remark" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="DisbursementList">
+          <Key>
+            <PropertyRef Name="DisbursementListId" />
+          </Key>
+          <Property Name="DisbursementListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RetrievalId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="DeliveryDate" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="PhNo" Type="varchar" MaxLength="50" />
+          <Property Name="Token" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+          </Key>
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="BinNo" Type="varchar" MaxLength="50" />
+          <Property Name="ReorderLevel" Type="int" />
+          <Property Name="ReorderQuantity" Type="int" />
+          <Property Name="MeasurementId" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="HoldQuantity" Type="int" />
+          <Property Name="SupplierId1" Type="int" />
+          <Property Name="Price1" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="SupplierId2" Type="int" />
+          <Property Name="Price2" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="SupplierId3" Type="int" />
+          <Property Name="Price3" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
+        <EntityType Name="ItemCodeGenerator">
+          <Key>
+            <PropertyRef Name="Letter" />
+          </Key>
+          <Property Name="Letter" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="itemcount" Type="int" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="MeasurementId" />
+          </Key>
+          <Property Name="MeasurementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitOfMeasurement" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Body" Type="varchar(max)" />
+          <Property Name="Intent" Type="varchar" MaxLength="50" />
+          <Property Name="PageHeader" Type="varchar" MaxLength="50" />
+          <Property Name="PageId" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraDetail" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PurchaseDetail">
+          <Key>
+            <PropertyRef Name="PurchaseDetailId" />
+          </Key>
+          <Property Name="PurchaseDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="int" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="SupplierId" Type="int" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderId" />
+          </Key>
+          <Property Name="PurchaseOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="date" />
+          <Property Name="SupplierId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="OrderStatus" Type="varchar" MaxLength="20" />
+          <Property Name="AuthorizedBy" Type="int" />
+          <Property Name="AuthorizedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="RequisitionId" />
+          </Key>
+          <Property Name="RequisitionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="ApprovedBy" Type="int" />
+          <Property Name="OrderedDate" Type="date" />
+          <Property Name="ApprovedDate" Type="date" />
+          <Property Name="RequisitionStatus" Type="varchar" MaxLength="50" />
+          <Property Name="Comment" Type="varchar" MaxLength="250" />
+          <Property Name="RetrievalId" Type="int" />
+        </EntityType>
+        <EntityType Name="RequisitionDetail">
+          <Key>
+            <PropertyRef Name="RequisitionDetailId" />
+          </Key>
+          <Property Name="RequisitionDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequisitionId" Type="int" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="OutstandingQuantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Retrieval">
+          <Key>
+            <PropertyRef Name="RetrievalId" />
+          </Key>
+          <Property Name="RetrievalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="RetrievalDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="ApproveRequisition" Type="bit" />
+          <Property Name="ChangeCollectionPoint" Type="bit" />
+          <Property Name="ViewRequisition" Type="bit" />
+          <Property Name="MakeRequisition" Type="bit" />
+          <Property Name="DelegateRole" Type="bit" />
+          <Property Name="ViewCollectionDetails" Type="bit" />
+          <Property Name="ConfirmDisbursement" Type="bit" />
+          <Property Name="ChangeRepresentative" Type="bit" />
+          <Property Name="Disbursement" Type="bit" />
+          <Property Name="MakeAdjustment" Type="bit" />
+          <Property Name="ApproveAdjustment" Type="bit" />
+          <Property Name="InventoryManagement" Type="bit" />
+          <Property Name="ViewReports" Type="bit" />
+          <Property Name="MakePurchaseOrder" Type="bit" />
+          <Property Name="ApprovePurchaseOrder" Type="bit" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierCode" Type="varchar" MaxLength="30" />
+          <Property Name="SupplierName" Type="varchar" MaxLength="100" />
+          <Property Name="ContactName" Type="varchar" MaxLength="100" />
+          <Property Name="PhNo" Type="varchar" MaxLength="50" />
+          <Property Name="FaxNo" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.disbAnalysis”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="disbAnalysis">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+          </Key>
+          <Property Name="DepartmentName" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeliveredQuantity" Type="int" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="100" />
+          <Property Name="DeliveryDate" Type="date" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6013: 表/视图“Project.dbo.PurchaseAnalysis”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+        <EntityType Name="PurchaseAnalysis">
+          <Property Name="SupplierName" Type="varchar" MaxLength="100" />
+          <Property Name="AuthorizedDate" Type="date" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="StockCard">
+          <Key>
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Dept/Supplier" Type="varchar" MaxLength="100" />
+          <Property Name="AdjustedQuantity" Type="varchar" MaxLength="101" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="AdjustmentDetailAdjustmentId">
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adjustment">
+              <PropertyRef Name="AdjustmentId" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="AdjustmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdjustmentDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdjustmentEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Adjustment">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryId">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CollectionPointId">
+          <End Role="CollectionPoints" Type="Self.CollectionPoints" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoints">
+              <PropertyRef Name="CollectionPointId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DelegateEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Delegate" Type="Self.Delegate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Delegate">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailDeliveryId">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="ReceivedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DepartmentHeadId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="HeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementListDepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="DisbursementList">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementListId">
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisbursementList">
+              <PropertyRef Name="DisbursementListId" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="DisbursementListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="eid">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="CollectionPoints" Type="Self.CollectionPoints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="CollectionPoints">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="RepresentativeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MeasurementId">
+          <End Role="Measurement" Type="Self.Measurement" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="MeasurementId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="MeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailPurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailSupplierId">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderAuthorizedBy">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="AuthorizedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderSupplierId">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="RequisitionDetail" Type="Self.RequisitionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="RequisitionDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionId">
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="0..1" />
+          <End Role="RequisitionDetail" Type="Self.RequisitionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisition">
+              <PropertyRef Name="RequisitionId" />
+            </Principal>
+            <Dependent Role="RequisitionDetail">
+              <PropertyRef Name="RequisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionRetrievalId">
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RetrievalEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Retrieval">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RetrievalId">
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="0..1" />
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="DisbursementList">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId1">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId2">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId3">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectModelStoreContainer">
+          <EntitySet Name="Adjustment" EntityType="Self.Adjustment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdjustmentDetail" EntityType="Self.AdjustmentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CollectionPoints" EntityType="Self.CollectionPoints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delegate" EntityType="Self.Delegate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryDetail" EntityType="Self.DeliveryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisbursementDetail" EntityType="Self.DisbursementDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisbursementList" EntityType="Self.DisbursementList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemCodeGenerator" EntityType="Self.ItemCodeGenerator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Measurement" EntityType="Self.Measurement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisition" EntityType="Self.Requisition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequisitionDetail" EntityType="Self.RequisitionDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Retrieval" EntityType="Self.Retrieval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="disbAnalysis" EntityType="Self.disbAnalysis" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [disbAnalysis].[DepartmentName] AS [DepartmentName], 
+    [disbAnalysis].[Description] AS [Description], 
+    [disbAnalysis].[ItemNo] AS [ItemNo], 
+    [disbAnalysis].[DeliveredQuantity] AS [DeliveredQuantity], 
+    [disbAnalysis].[CategoryName] AS [CategoryName], 
+    [disbAnalysis].[DeliveryDate] AS [DeliveryDate]
+    FROM [dbo].[disbAnalysis] AS [disbAnalysis]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StockCard" EntityType="Self.StockCard" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StockCard].[Date] AS [Date], 
+    [StockCard].[Dept/Supplier] AS [Dept/Supplier], 
+    [StockCard].[AdjustedQuantity] AS [AdjustedQuantity], 
+    [StockCard].[ItemNo] AS [ItemNo], 
+    [StockCard].[Description] AS [Description]
+    FROM [dbo].[StockCard] AS [StockCard]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="AdjustmentDetailAdjustmentId" Association="Self.AdjustmentDetailAdjustmentId">
+            <End Role="Adjustment" EntitySet="Adjustment" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="AdjustmentDetailItemNo" Association="Self.AdjustmentDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="AdjustmentEmployeeId" Association="Self.AdjustmentEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Adjustment" EntitySet="Adjustment" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryId" Association="Self.CategoryId">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="CollectionPointId" Association="Self.CollectionPointId">
+            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="DelegateEmployeeId" Association="Self.DelegateEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Delegate" EntitySet="Delegate" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryDetailDeliveryId" Association="Self.DeliveryDetailDeliveryId">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryDetailItemNo" Association="Self.DeliveryDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryEmployeeId" Association="Self.DeliveryEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="DepartmentHeadId" Association="Self.DepartmentHeadId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="DepartmentId" Association="Self.DepartmentId">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementDetailItemNo" Association="Self.DisbursementDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementListDepartmentId" Association="Self.DisbursementListDepartmentId">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DisbursementList" EntitySet="DisbursementList" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementListId" Association="Self.DisbursementListId">
+            <End Role="DisbursementList" EntitySet="DisbursementList" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="eid" Association="Self.eid">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeId" Association="Self.EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="MeasurementId" Association="Self.MeasurementId">
+            <End Role="Measurement" EntitySet="Measurement" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailItemNo" Association="Self.PurchaseDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailPurchaseOrderId" Association="Self.PurchaseDetailPurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailSupplierId" Association="Self.PurchaseDetailSupplierId">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderAuthorizedBy" Association="Self.PurchaseOrderAuthorizedBy">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderEmployeeId" Association="Self.PurchaseOrderEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderId" Association="Self.PurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderSupplierId" Association="Self.PurchaseOrderSupplierId">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionDetailItemNo" Association="Self.RequisitionDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="RequisitionDetail" EntitySet="RequisitionDetail" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionEmployeeId" Association="Self.RequisitionEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionId" Association="Self.RequisitionId">
+            <End Role="Requisition" EntitySet="Requisition" />
+            <End Role="RequisitionDetail" EntitySet="RequisitionDetail" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionRetrievalId" Association="Self.RequisitionRetrievalId">
+            <End Role="Retrieval" EntitySet="Retrieval" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="RetrievalEmployeeId" Association="Self.RetrievalEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Retrieval" EntitySet="Retrieval" />
+          </AssociationSet>
+          <AssociationSet Name="RetrievalId" Association="Self.RetrievalId">
+            <End Role="Retrieval" EntitySet="Retrieval" />
+            <End Role="DisbursementList" EntitySet="DisbursementList" />
+          </AssociationSet>
+          <AssociationSet Name="RoleId" Association="Self.RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId1" Association="Self.SupplierId1">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId2" Association="Self.SupplierId2">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId3" Association="Self.SupplierId3">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adjustment">
+          <Key>
+            <PropertyRef Name="AdjustmentId" />
+          </Key>
+          <Property Name="AdjustmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdjustmentDate" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="SupervisorId" Type="Int32" />
+          <Property Name="SupervisorAuthorizedDate" Type="DateTime" Precision="0" />
+          <Property Name="HeadId" Type="Int32" />
+          <Property Name="HeadAuthorizedDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdjustmentDetails" Relationship="Self.AdjustmentDetailAdjustmentId" FromRole="Adjustment" ToRole="AdjustmentDetail" />
+          <NavigationProperty Name="Employee" Relationship="Self.AdjustmentEmployeeId" FromRole="Adjustment" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="AdjustmentDetail">
+          <Key>
+            <PropertyRef Name="AdjustmentDetailId" />
+          </Key>
+          <Property Name="AdjustmentDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdjustmentId" Type="Int32" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adjustment" Relationship="Self.AdjustmentDetailAdjustmentId" FromRole="AdjustmentDetail" ToRole="Adjustment" />
+          <NavigationProperty Name="Inventory" Relationship="Self.AdjustmentDetailItemNo" FromRole="AdjustmentDetail" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.CategoryId" FromRole="Category" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="CollectionPoint">
+          <Key>
+            <PropertyRef Name="CollectionPointId" />
+          </Key>
+          <Property Name="CollectionPointId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CollectTime" Type="Time" Precision="7" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="Self.CollectionPointId" FromRole="CollectionPoints" ToRole="Department" />
+          <NavigationProperty Name="Employee" Relationship="Self.eid" FromRole="CollectionPoints" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Delegate">
+          <Key>
+            <PropertyRef Name="DelegateId" />
+          </Key>
+          <Property Name="DelegateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="ActualEndDate" Type="DateTime" Precision="0" />
+          <Property Name="ApprovedBy" Type="Int32" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.DelegateEmployeeId" FromRole="Delegate" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryOrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaseOrderId" Type="Int32" />
+          <Property Name="DeliveredDate" Type="DateTime" Precision="0" />
+          <Property Name="ReceivedBy" Type="Int32" />
+          <NavigationProperty Name="DeliveryDetails" Relationship="Self.DeliveryDetailDeliveryId" FromRole="Delivery" ToRole="DeliveryDetail" />
+          <NavigationProperty Name="Employee" Relationship="Self.DeliveryEmployeeId" FromRole="Delivery" ToRole="Employee" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.PurchaseOrderId" FromRole="Delivery" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="DeliveryDetail">
+          <Key>
+            <PropertyRef Name="DeliveryDetailid" />
+          </Key>
+          <Property Name="DeliveryDetailid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryId" Type="Int32" />
+          <NavigationProperty Name="Delivery" Relationship="Self.DeliveryDetailDeliveryId" FromRole="DeliveryDetail" ToRole="Delivery" />
+          <NavigationProperty Name="Inventory" Relationship="Self.DeliveryDetailItemNo" FromRole="DeliveryDetail" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContactName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HeadId" Type="Int32" />
+          <Property Name="CollectionPointId" Type="Int32" />
+          <Property Name="RepresentativeId" Type="Int32" />
+          <NavigationProperty Name="CollectionPoint" Relationship="Self.CollectionPointId" FromRole="Department" ToRole="CollectionPoints" />
+          <NavigationProperty Name="Head" Relationship="Self.DepartmentHeadId" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="Self.DepartmentId" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="DisbursementLists" Relationship="Self.DisbursementListDepartmentId" FromRole="Department" ToRole="DisbursementList" />
+          <NavigationProperty Name="Representative" Relationship="Self.EmployeeId" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="DisbursementDetail">
+          <Key>
+            <PropertyRef Name="DisbursementDetailId" />
+          </Key>
+          <Property Name="DisbursementDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisbursementListId" Type="Int32" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PreparedQuantity" Type="Int32" />
+          <Property Name="DeliveredQuantity" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventory" Relationship="Self.DisbursementDetailItemNo" FromRole="DisbursementDetail" ToRole="Inventory" />
+          <NavigationProperty Name="DisbursementList" Relationship="Self.DisbursementListId" FromRole="DisbursementDetail" ToRole="DisbursementList" />
+        </EntityType>
+        <EntityType Name="DisbursementList">
+          <Key>
+            <PropertyRef Name="DisbursementListId" />
+          </Key>
+          <Property Name="DisbursementListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RetrievalId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Department" Relationship="Self.DisbursementListDepartmentId" FromRole="DisbursementList" ToRole="Department" />
+          <NavigationProperty Name="DisbursementDetails" Relationship="Self.DisbursementListId" FromRole="DisbursementList" ToRole="DisbursementDetail" />
+          <NavigationProperty Name="Retrieval" Relationship="Self.RetrievalId" FromRole="DisbursementList" ToRole="Retrieval" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="PhNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adjustments" Relationship="Self.AdjustmentEmployeeId" FromRole="Employee" ToRole="Adjustment" />
+          <NavigationProperty Name="CollectionPoints" Relationship="Self.eid" FromRole="Employee" ToRole="CollectionPoints" />
+          <NavigationProperty Name="Delegates" Relationship="Self.DelegateEmployeeId" FromRole="Employee" ToRole="Delegate" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.DeliveryEmployeeId" FromRole="Employee" ToRole="Delivery" />
+          <NavigationProperty Name="Departments" Relationship="Self.DepartmentHeadId" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Department" Relationship="Self.DepartmentId" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Departments1" Relationship="Self.EmployeeId" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.PurchaseOrderAuthorizedBy" FromRole="Employee" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseOrders1" Relationship="Self.PurchaseOrderEmployeeId" FromRole="Employee" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.RequisitionEmployeeId" FromRole="Employee" ToRole="Requisition" />
+          <NavigationProperty Name="Retrievals" Relationship="Self.RetrievalEmployeeId" FromRole="Employee" ToRole="Retrieval" />
+          <NavigationProperty Name="Role" Relationship="Self.RoleId" FromRole="Employee" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+          </Key>
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BinNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReorderLevel" Type="Int32" />
+          <Property Name="ReorderQuantity" Type="Int32" />
+          <Property Name="MeasurementId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="HoldQuantity" Type="Int32" />
+          <Property Name="SupplierId1" Type="Int32" />
+          <Property Name="Price1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="SupplierId2" Type="Int32" />
+          <Property Name="Price2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="SupplierId3" Type="Int32" />
+          <Property Name="Price3" Type="Decimal" Precision="8" Scale="2" />
+          <NavigationProperty Name="AdjustmentDetails" Relationship="Self.AdjustmentDetailItemNo" FromRole="Inventory" ToRole="AdjustmentDetail" />
+          <NavigationProperty Name="Category" Relationship="Self.CategoryId" FromRole="Inventory" ToRole="Category" />
+          <NavigationProperty Name="DeliveryDetails" Relationship="Self.DeliveryDetailItemNo" FromRole="Inventory" ToRole="DeliveryDetail" />
+          <NavigationProperty Name="DisbursementDetails" Relationship="Self.DisbursementDetailItemNo" FromRole="Inventory" ToRole="DisbursementDetail" />
+          <NavigationProperty Name="Measurement" Relationship="Self.MeasurementId" FromRole="Inventory" ToRole="Measurement" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailItemNo" FromRole="Inventory" ToRole="PurchaseDetail" />
+          <NavigationProperty Name="RequisitionDetails" Relationship="Self.RequisitionDetailItemNo" FromRole="Inventory" ToRole="RequisitionDetail" />
+          <NavigationProperty Name="Supplier" Relationship="Self.SupplierId1" FromRole="Inventory" ToRole="Supplier" />
+          <NavigationProperty Name="Supplier1" Relationship="Self.SupplierId2" FromRole="Inventory" ToRole="Supplier" />
+          <NavigationProperty Name="Supplier2" Relationship="Self.SupplierId3" FromRole="Inventory" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="ItemCodeGenerator">
+          <Key>
+            <PropertyRef Name="Letter" />
+          </Key>
+          <Property Name="Letter" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="itemcount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="MeasurementId" />
+          </Key>
+          <Property Name="MeasurementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitOfMeasurement" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.MeasurementId" FromRole="Measurement" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Intent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PageHeader" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PageId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraDetail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PurchaseDetail">
+          <Key>
+            <PropertyRef Name="PurchaseDetailId" />
+          </Key>
+          <Property Name="PurchaseDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderId" Type="Int32" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="SupplierId" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.PurchaseDetailItemNo" FromRole="PurchaseDetail" ToRole="Inventory" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.PurchaseDetailPurchaseOrderId" FromRole="PurchaseDetail" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Supplier" Relationship="Self.PurchaseDetailSupplierId" FromRole="PurchaseDetail" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderId" />
+          </Key>
+          <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="OrderStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizedBy" Type="Int32" />
+          <Property Name="AuthorizedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.PurchaseOrderId" FromRole="PurchaseOrder" ToRole="Delivery" />
+          <NavigationProperty Name="Employee" Relationship="Self.PurchaseOrderAuthorizedBy" FromRole="PurchaseOrder" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="Self.PurchaseOrderEmployeeId" FromRole="PurchaseOrder" ToRole="Employee" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailPurchaseOrderId" FromRole="PurchaseOrder" ToRole="PurchaseDetail" />
+          <NavigationProperty Name="Supplier" Relationship="Self.PurchaseOrderSupplierId" FromRole="PurchaseOrder" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="RequisitionId" />
+          </Key>
+          <Property Name="RequisitionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="ApprovedBy" Type="Int32" />
+          <Property Name="OrderedDate" Type="DateTime" Precision="0" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="0" />
+          <Property Name="RequisitionStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RetrievalId" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.RequisitionEmployeeId" FromRole="Requisition" ToRole="Employee" />
+          <NavigationProperty Name="RequisitionDetails" Relationship="Self.RequisitionId" FromRole="Requisition" ToRole="RequisitionDetail" />
+          <NavigationProperty Name="Retrieval" Relationship="Self.RequisitionRetrievalId" FromRole="Requisition" ToRole="Retrieval" />
+        </EntityType>
+        <EntityType Name="RequisitionDetail">
+          <Key>
+            <PropertyRef Name="RequisitionDetailId" />
+          </Key>
+          <Property Name="RequisitionDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequisitionId" Type="Int32" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="OutstandingQuantity" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.RequisitionDetailItemNo" FromRole="RequisitionDetail" ToRole="Inventory" />
+          <NavigationProperty Name="Requisition" Relationship="Self.RequisitionId" FromRole="RequisitionDetail" ToRole="Requisition" />
+        </EntityType>
+        <EntityType Name="Retrieval">
+          <Key>
+            <PropertyRef Name="RetrievalId" />
+          </Key>
+          <Property Name="RetrievalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="RetrievalDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DisbursementLists" Relationship="Self.RetrievalId" FromRole="Retrieval" ToRole="DisbursementList" />
+          <NavigationProperty Name="Employee" Relationship="Self.RetrievalEmployeeId" FromRole="Retrieval" ToRole="Employee" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.RequisitionRetrievalId" FromRole="Retrieval" ToRole="Requisition" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ApproveRequisition" Type="Boolean" />
+          <Property Name="ChangeCollectionPoint" Type="Boolean" />
+          <Property Name="ViewRequisition" Type="Boolean" />
+          <Property Name="MakeRequisition" Type="Boolean" />
+          <Property Name="DelegateRole" Type="Boolean" />
+          <Property Name="ViewCollectionDetails" Type="Boolean" />
+          <Property Name="ConfirmDisbursement" Type="Boolean" />
+          <Property Name="ChangeRepresentative" Type="Boolean" />
+          <Property Name="Disbursement" Type="Boolean" />
+          <Property Name="MakeAdjustment" Type="Boolean" />
+          <Property Name="ApproveAdjustment" Type="Boolean" />
+          <Property Name="InventoryManagement" Type="Boolean" />
+          <Property Name="ViewReports" Type="Boolean" />
+          <Property Name="MakePurchaseOrder" Type="Boolean" />
+          <Property Name="ApprovePurchaseOrder" Type="Boolean" />
+          <NavigationProperty Name="Employees" Relationship="Self.RoleId" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContactName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="GstRegistrationNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.SupplierId1" FromRole="Supplier" ToRole="Inventory" />
+          <NavigationProperty Name="Inventories1" Relationship="Self.SupplierId2" FromRole="Supplier" ToRole="Inventory" />
+          <NavigationProperty Name="Inventories2" Relationship="Self.SupplierId3" FromRole="Supplier" ToRole="Inventory" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailSupplierId" FromRole="Supplier" ToRole="PurchaseDetail" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.PurchaseOrderSupplierId" FromRole="Supplier" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="disbAnalysi">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+          </Key>
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveredQuantity" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="StockCard">
+          <Key>
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Dept_Supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AdjustedQuantity" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="AdjustmentDetailAdjustmentId">
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adjustment">
+              <PropertyRef Name="AdjustmentId" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="AdjustmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdjustmentEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Adjustment">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdjustmentDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryId">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CollectionPointId">
+          <End Role="CollectionPoints" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoints">
+              <PropertyRef Name="CollectionPointId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="eid">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="CollectionPoints" Type="Self.CollectionPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="CollectionPoints">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DelegateEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Delegate" Type="Self.Delegate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Delegate">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailDeliveryId">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="ReceivedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DepartmentHeadId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="HeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementListDepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="DisbursementList">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="RepresentativeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisbursementListId">
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisbursementList">
+              <PropertyRef Name="DisbursementListId" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="DisbursementListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RetrievalId">
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="0..1" />
+          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="DisbursementList">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderAuthorizedBy">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="AuthorizedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RetrievalEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Retrieval">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MeasurementId">
+          <End Role="Measurement" Type="Self.Measurement" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="MeasurementId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="MeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="RequisitionDetail" Type="Self.RequisitionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="RequisitionDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId1">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId2">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierId3">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SupplierId3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailPurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseDetailSupplierId">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderSupplierId">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionId">
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="0..1" />
+          <End Role="RequisitionDetail" Type="Self.RequisitionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisition">
+              <PropertyRef Name="RequisitionId" />
+            </Principal>
+            <Dependent Role="RequisitionDetail">
+              <PropertyRef Name="RequisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequisitionRetrievalId">
+          <End Role="Retrieval" Type="Self.Retrieval" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adjustments" EntityType="Self.Adjustment" />
+          <EntitySet Name="AdjustmentDetails" EntityType="Self.AdjustmentDetail" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CollectionPoints" EntityType="Self.CollectionPoint" />
+          <EntitySet Name="Delegates" EntityType="Self.Delegate" />
+          <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
+          <EntitySet Name="DeliveryDetails" EntityType="Self.DeliveryDetail" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DisbursementDetails" EntityType="Self.DisbursementDetail" />
+          <EntitySet Name="DisbursementLists" EntityType="Self.DisbursementList" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Inventories" EntityType="Self.Inventory" />
+          <EntitySet Name="ItemCodeGenerators" EntityType="Self.ItemCodeGenerator" />
+          <EntitySet Name="Measurements" EntityType="Self.Measurement" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetail" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
+          <EntitySet Name="RequisitionDetails" EntityType="Self.RequisitionDetail" />
+          <EntitySet Name="Retrievals" EntityType="Self.Retrieval" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="disbAnalysis" EntityType="Self.disbAnalysi" />
+          <EntitySet Name="StockCards" EntityType="Self.StockCard" />
+          <AssociationSet Name="AdjustmentDetailAdjustmentId" Association="Self.AdjustmentDetailAdjustmentId">
+            <End Role="Adjustment" EntitySet="Adjustments" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="AdjustmentEmployeeId" Association="Self.AdjustmentEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Adjustment" EntitySet="Adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="AdjustmentDetailItemNo" Association="Self.AdjustmentDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryId" Association="Self.CategoryId">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="CollectionPointId" Association="Self.CollectionPointId">
+            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="eid" Association="Self.eid">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
+          </AssociationSet>
+          <AssociationSet Name="DelegateEmployeeId" Association="Self.DelegateEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Delegate" EntitySet="Delegates" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryDetailDeliveryId" Association="Self.DeliveryDetailDeliveryId">
+            <End Role="Delivery" EntitySet="Deliveries" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryEmployeeId" Association="Self.DeliveryEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderId" Association="Self.PurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryDetailItemNo" Association="Self.DeliveryDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="DepartmentHeadId" Association="Self.DepartmentHeadId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="DepartmentId" Association="Self.DepartmentId">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementListDepartmentId" Association="Self.DisbursementListDepartmentId">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="DisbursementList" EntitySet="DisbursementLists" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeId" Association="Self.EmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementDetailItemNo" Association="Self.DisbursementDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementListId" Association="Self.DisbursementListId">
+            <End Role="DisbursementList" EntitySet="DisbursementLists" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="RetrievalId" Association="Self.RetrievalId">
+            <End Role="Retrieval" EntitySet="Retrievals" />
+            <End Role="DisbursementList" EntitySet="DisbursementLists" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderAuthorizedBy" Association="Self.PurchaseOrderAuthorizedBy">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderEmployeeId" Association="Self.PurchaseOrderEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionEmployeeId" Association="Self.RequisitionEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+          <AssociationSet Name="RetrievalEmployeeId" Association="Self.RetrievalEmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Retrieval" EntitySet="Retrievals" />
+          </AssociationSet>
+          <AssociationSet Name="RoleId" Association="Self.RoleId">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="MeasurementId" Association="Self.MeasurementId">
+            <End Role="Measurement" EntitySet="Measurements" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailItemNo" Association="Self.PurchaseDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionDetailItemNo" Association="Self.RequisitionDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="RequisitionDetail" EntitySet="RequisitionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId1" Association="Self.SupplierId1">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId2" Association="Self.SupplierId2">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierId3" Association="Self.SupplierId3">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailPurchaseOrderId" Association="Self.PurchaseDetailPurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailSupplierId" Association="Self.PurchaseDetailSupplierId">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderSupplierId" Association="Self.PurchaseOrderSupplierId">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionId" Association="Self.RequisitionId">
+            <End Role="Requisition" EntitySet="Requisitions" />
+            <End Role="RequisitionDetail" EntitySet="RequisitionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="RequisitionRetrievalId" Association="Self.RequisitionRetrievalId">
+            <End Role="Retrieval" EntitySet="Retrievals" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectModelStoreContainer" CdmEntityContainer="ProjectEntities">
+          <EntitySetMapping Name="Adjustments">
+            <EntityTypeMapping TypeName="ProjectModel.Adjustment">
+              <MappingFragment StoreEntitySet="Adjustment">
+                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
+                <ScalarProperty Name="AdjustmentDate" ColumnName="AdjustmentDate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SupervisorId" ColumnName="SupervisorId" />
+                <ScalarProperty Name="SupervisorAuthorizedDate" ColumnName="SupervisorAuthorizedDate" />
+                <ScalarProperty Name="HeadId" ColumnName="HeadId" />
+                <ScalarProperty Name="HeadAuthorizedDate" ColumnName="HeadAuthorizedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdjustmentDetails">
+            <EntityTypeMapping TypeName="ProjectModel.AdjustmentDetail">
+              <MappingFragment StoreEntitySet="AdjustmentDetail">
+                <ScalarProperty Name="AdjustmentDetailId" ColumnName="AdjustmentDetailId" />
+                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ProjectModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CollectionPoints">
+            <EntityTypeMapping TypeName="ProjectModel.CollectionPoint">
+              <MappingFragment StoreEntitySet="CollectionPoints">
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+                <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
+                <ScalarProperty Name="CollectTime" ColumnName="CollectTime" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delegates">
+            <EntityTypeMapping TypeName="ProjectModel.Delegate">
+              <MappingFragment StoreEntitySet="Delegate">
+                <ScalarProperty Name="DelegateId" ColumnName="DelegateId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ActualEndDate" ColumnName="ActualEndDate" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="ProjectModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="DeliveryOrderNo" ColumnName="DeliveryOrderNo" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+                <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryDetails">
+            <EntityTypeMapping TypeName="ProjectModel.DeliveryDetail">
+              <MappingFragment StoreEntitySet="DeliveryDetail">
+                <ScalarProperty Name="DeliveryDetailid" ColumnName="DeliveryDetailid" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="ProjectModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="PhNo" ColumnName="PhNo" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="HeadId" ColumnName="HeadId" />
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+                <ScalarProperty Name="RepresentativeId" ColumnName="RepresentativeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DisbursementDetails">
+            <EntityTypeMapping TypeName="ProjectModel.DisbursementDetail">
+              <MappingFragment StoreEntitySet="DisbursementDetail">
+                <ScalarProperty Name="DisbursementDetailId" ColumnName="DisbursementDetailId" />
+                <ScalarProperty Name="DisbursementListId" ColumnName="DisbursementListId" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="PreparedQuantity" ColumnName="PreparedQuantity" />
+                <ScalarProperty Name="DeliveredQuantity" ColumnName="DeliveredQuantity" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DisbursementLists">
+            <EntityTypeMapping TypeName="ProjectModel.DisbursementList">
+              <MappingFragment StoreEntitySet="DisbursementList">
+                <ScalarProperty Name="DisbursementListId" ColumnName="DisbursementListId" />
+                <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ProjectModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PhNo" ColumnName="PhNo" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="ProjectModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BinNo" ColumnName="BinNo" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="ReorderQuantity" ColumnName="ReorderQuantity" />
+                <ScalarProperty Name="MeasurementId" ColumnName="MeasurementId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="HoldQuantity" ColumnName="HoldQuantity" />
+                <ScalarProperty Name="SupplierId1" ColumnName="SupplierId1" />
+                <ScalarProperty Name="Price1" ColumnName="Price1" />
+                <ScalarProperty Name="SupplierId2" ColumnName="SupplierId2" />
+                <ScalarProperty Name="Price2" ColumnName="Price2" />
+                <ScalarProperty Name="SupplierId3" ColumnName="SupplierId3" />
+                <ScalarProperty Name="Price3" ColumnName="Price3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemCodeGenerators">
+            <EntityTypeMapping TypeName="ProjectModel.ItemCodeGenerator">
+              <MappingFragment StoreEntitySet="ItemCodeGenerator">
+                <ScalarProperty Name="Letter" ColumnName="Letter" />
+                <ScalarProperty Name="itemcount" ColumnName="itemcount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Measurements">
+            <EntityTypeMapping TypeName="ProjectModel.Measurement">
+              <MappingFragment StoreEntitySet="Measurement">
+                <ScalarProperty Name="MeasurementId" ColumnName="MeasurementId" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="ProjectModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Intent" ColumnName="Intent" />
+                <ScalarProperty Name="PageHeader" ColumnName="PageHeader" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="ExtraDetail" ColumnName="ExtraDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseDetails">
+            <EntityTypeMapping TypeName="ProjectModel.PurchaseDetail">
+              <MappingFragment StoreEntitySet="PurchaseDetail">
+                <ScalarProperty Name="PurchaseDetailId" ColumnName="PurchaseDetailId" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="ProjectModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="AuthorizedBy" ColumnName="AuthorizedBy" />
+                <ScalarProperty Name="AuthorizedDate" ColumnName="AuthorizedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisitions">
+            <EntityTypeMapping TypeName="ProjectModel.Requisition">
+              <MappingFragment StoreEntitySet="Requisition">
+                <ScalarProperty Name="RequisitionId" ColumnName="RequisitionId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="OrderedDate" ColumnName="OrderedDate" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="RequisitionStatus" ColumnName="RequisitionStatus" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisitionDetails">
+            <EntityTypeMapping TypeName="ProjectModel.RequisitionDetail">
+              <MappingFragment StoreEntitySet="RequisitionDetail">
+                <ScalarProperty Name="RequisitionDetailId" ColumnName="RequisitionDetailId" />
+                <ScalarProperty Name="RequisitionId" ColumnName="RequisitionId" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OutstandingQuantity" ColumnName="OutstandingQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Retrievals">
+            <EntityTypeMapping TypeName="ProjectModel.Retrieval">
+              <MappingFragment StoreEntitySet="Retrieval">
+                <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="RetrievalDate" ColumnName="RetrievalDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ProjectModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ApproveRequisition" ColumnName="ApproveRequisition" />
+                <ScalarProperty Name="ChangeCollectionPoint" ColumnName="ChangeCollectionPoint" />
+                <ScalarProperty Name="ViewRequisition" ColumnName="ViewRequisition" />
+                <ScalarProperty Name="MakeRequisition" ColumnName="MakeRequisition" />
+                <ScalarProperty Name="DelegateRole" ColumnName="DelegateRole" />
+                <ScalarProperty Name="ViewCollectionDetails" ColumnName="ViewCollectionDetails" />
+                <ScalarProperty Name="ConfirmDisbursement" ColumnName="ConfirmDisbursement" />
+                <ScalarProperty Name="ChangeRepresentative" ColumnName="ChangeRepresentative" />
+                <ScalarProperty Name="Disbursement" ColumnName="Disbursement" />
+                <ScalarProperty Name="MakeAdjustment" ColumnName="MakeAdjustment" />
+                <ScalarProperty Name="ApproveAdjustment" ColumnName="ApproveAdjustment" />
+                <ScalarProperty Name="InventoryManagement" ColumnName="InventoryManagement" />
+                <ScalarProperty Name="ViewReports" ColumnName="ViewReports" />
+                <ScalarProperty Name="MakePurchaseOrder" ColumnName="MakePurchaseOrder" />
+                <ScalarProperty Name="ApprovePurchaseOrder" ColumnName="ApprovePurchaseOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ProjectModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="PhNo" ColumnName="PhNo" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GstRegistrationNo" ColumnName="GstRegistrationNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="disbAnalysis">
+            <EntityTypeMapping TypeName="ProjectModel.disbAnalysi">
+              <MappingFragment StoreEntitySet="disbAnalysis">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="DeliveredQuantity" ColumnName="DeliveredQuantity" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockCards">
+            <EntityTypeMapping TypeName="ProjectModel.StockCard">
+              <MappingFragment StoreEntitySet="StockCard">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Dept_Supplier" ColumnName="Dept/Supplier" />
+                <ScalarProperty Name="AdjustedQuantity" ColumnName="AdjustedQuantity" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

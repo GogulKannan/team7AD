@@ -1,0 +1,232 @@
+﻿@{ 
+
+    var baseurl = string.Format("{0}://{1}{2}",
+                    HttpContext.Current.Request.Url.Scheme,
+                    HttpContext.Current.Request.ServerVariables["HTTP_HOST"],
+                    (HttpContext.Current.Request.ApplicationPath.Equals("/")) ? string.Empty : HttpContext.Current.Request.ApplicationPath
+                    );
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- For dropdown select -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+
+    <!-- for DatePicker bootstrap-->
+    <script type="text/javascript" src="@baseurl/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="@baseurl/scripts/bootstrap-datetimepicker.js"></script>
+    <link rel="stylesheet" href="@baseurl/Content/bootstrap-datetimepicker.css" />
+
+    <!-- additional custom styles -->
+    <link rel="stylesheet" href="@baseurl/resources/mystyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="@baseurl/resources/dashboard.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="print" href="@baseurl/resources/print.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="@baseurl/resources/screen.css">
+    
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top t7-card-4">
+        <div class="container-fluid" style="height: 100%">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logic University SSIS</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                        @if (Page.Employee != null)
+                        {
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@Page.Employee.EmployeeName <span class="caret"></span></a>
+                    
+                                <ul class="dropdown-menu">
+                                 
+                                    <li><a href="@baseurl/Auth/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                    
+                                </ul>
+                    </li>
+                            
+
+                        }
+                        else
+                        {
+                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                        }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div>
+    </div>
+
+    <div>
+        <br />
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul id="nav" class="nav nav-sidebar">
+                    @if (Page.Employee.Role.Disbursement || Page.Employee.Role.InventoryManagement || Page.Employee.Role.MakePurchaseOrder || Page.Employee.Role.ApprovePurchaseOrder|| Page.Employee.Role.ViewReports|| Page.Employee.Role.MakeAdjustment|| Page.Employee.Role.ApproveAdjustment)
+                    {
+                        <li><a><b><u>Store</u></b></a></li>
+                    }                   
+                    @if (Page.Employee.Role.Disbursement)
+                    {
+                        <li id="menu1"><a href="@baseurl/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
+                        <li id="menu2"><a href="@baseurl/Store/ViewDisbursements">View Disbursements</a></li>
+                    }
+                    @if (Page.Employee.Role.MakePurchaseOrder|| Page.Employee.Role.ApprovePurchaseOrder)
+                    {
+                        <li id="menu3"><a href="@baseurl/StorePO/PurchaseOrderSummary">Purchase Orders</a></li>
+                    }
+                    @if (Page.Employee.Role.InventoryManagement)
+                    {
+                        <li id="menu4"><a href="@baseurl/StorePO/ListDeliveries">Deliveries</a></li>
+                        <li id="menu5"><a href="@baseurl/Store/Inventory">View Inventory</a></li>
+                        <li id="menu6"><a href="@baseurl/Store/SupplierList">Supplier List</a></li>
+                    }
+                    @if (Page.Employee.Role.ViewReports)
+                    {
+                        <li id="menu7"><a href="@baseurl/Rpt">Generate Reports</a></li>
+                    }
+                    @if (Page.Employee.Role.MakeAdjustment)
+                    {
+                        <li id="menu8"><a href="@baseurl/Adjustments/Create">Create Adjustment</a></li>
+                        <li id="menu9"><a href="@baseurl/Adjustments/ViewAdjustment">View Adjustment</a></li>
+                    }
+                    @if (Page.Employee.Role.ApproveAdjustment)
+                    {
+                        <li id="menu9"><a href="@baseurl/Adjustments/ViewAdjustment">Approve Adjustment</a></li>
+                        
+                    }
+
+                    @if (Page.Employee.Role.Disbursement || Page.Employee.Role.InventoryManagement || Page.Employee.Role.MakePurchaseOrder || Page.Employee.Role.ApprovePurchaseOrder || Page.Employee.Role.ViewReports || Page.Employee.Role.MakeAdjustment || Page.Employee.Role.ApproveAdjustment)
+                    {
+                        <li><hr /></li>
+                    }   
+                 
+                    <!--Department Functions-->
+
+                    @if (Page.Employee.Role.ViewRequisition|| Page.Employee.Role.ApproveRequisition|| Page.Employee.Role.MakeRequisition|| Page.Employee.Role.ChangeCollectionPoint|| Page.Employee.Role.ConfirmDisbursement|| Page.Employee.Role.DelegateRole)
+                    {
+                        
+                        <li><a><b><u>Stationery Requisition</u></b></a></li>
+                    } 
+                    @if (Page.Employee.Role.ViewRequisition)
+                    {
+                        <li id="menu10"><a href="@baseurl/Stationery/DepartmentRequisitions">View Requisition</a></li>
+                    }
+                    @if (Page.Employee.Role.ApproveRequisition)
+                    {
+                        <li id="menu11"><a href="@baseurl/Head/ApproveRequisition">Approve Requisition</a></li>
+                    }
+                    @if (Page.Employee.Role.MakeRequisition)
+                    {
+                        <li id="menu12"><a href="@baseurl/Stationery/EmployeeRequisition">Make Requisition</a></li>
+                    }
+                    @if (Page.Employee.Role.ChangeCollectionPoint)
+                    {                       
+                        <li id="menu13"><a href="@baseurl/Representative/Edit">Change Collection Point</a></li>
+                    }
+                    @if (Page.Employee.Role.ConfirmDisbursement)
+                    {
+                        <li id="menu14"><a href="@baseurl/Representative/ViewDisbursements">Confirm Disbursement</a></li>
+                    }
+                    @if (Page.Employee.Role.DelegateRole)
+                    {
+                        <li id="menu15"><a href="@baseurl/Head/show">Manage Delegation</a></li>
+                    }
+                                      
+                    @if (Page.Employee.Role.ChangeRepresentative)
+                    {
+                        <li id="menu16"><a href="@baseurl/Head/ChangeRepresentive">Change Department Representative</a></li>
+                    }
+                                   
+                    
+                    
+                    
+                </ul>
+
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">
+                    @Page.Title
+                </h1>
+
+                @*<h2 class="sub-header" id="sectiontitle">@Page.Subtitle</h2>*@
+
+                <div id="mainbody" class="container-fluid">
+                    
+                   @RenderBody()
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
+    @*<script>
+        $(function () {
+            var current = location.pathname;
+            console.log(current);
+            $('#nav li a').each(function () {
+                var $this = $(this);
+                // if the current path is like this link, make it active
+                if ($this.attr('href').indexOf(current) !== -1) {
+                    console.log($this.outerHtml);
+                    $this.parent().addClass('active selected');
+                }
+            })
+        })
+    </script>*@
+   
+    <script type="text/javascript">
+
+        $(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.document.location = $(this).data("href");
+            })
+            .hover(function () {
+                $(this).css('background-color','#ccc');
+            }, function () {
+                $(this).css('background-color','#fff');
+            });
+        })
+    </script>
+</body>
+</html>
+
+

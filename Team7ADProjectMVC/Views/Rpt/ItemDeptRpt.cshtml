@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "ItemDeptRpt";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    string[] month = new string[] { "Nil", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+    //Author: Zhan Seng
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <h2>Generate Reports</h2>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="/Rpt"><h4>Item Consumption by Departments</h4></a></li>
+        <li role="presentation"><a href="/Rpt/ItemSupplier"><h4>Item Supply by Suppliers</h4></a></li>
+        <li role="presentation"><a href="/Rpt/CostByDept"><h4>Item Costs by Departments</h4></a></li>
+        <li role="presentation"><a href="/Rpt/Stocklist"><h4>Stock List</h4></a></li>
+    </ul>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <label for="DepartmentId">Department</label>
+            </div>
+            <div class="col-md-5">
+                <select id="Departments" name="Departments"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="" multiple required>
+                    @foreach (var item in ViewBag.Departments)
+                    {
+                        <option>@item.DepartmentName</option>
+                    }
+                </select>               
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <label for="Categories">Categories</label>
+            </div>
+            <div class="col-md-5">
+                <select id="Categories" name="Categories"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" required>
+                    <option></option>
+                    @foreach (var item in ViewBag.Categories)
+                    {
+                        <option data-subtext="">@item.CategoryName</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="control-label col-md-2">
+                <br />
+                <label for="period">Period</label>
+            </div>
+            <div class="col-md-10" name="period" id="period">
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <label for="Month">Month</label>
+                        <select class="form-control" id="Month" name="Month" required>
+                            <option> </option>
+                            @foreach (var item in ViewBag.Months)
+                            {
+                                <option value="@item">@month[int.Parse(item)]</option>
+                            }
+                        </select>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label for="Year">Year</label>
+                        <select class="form-control" id="Year" name="Year" required>
+                            <option> </option>
+                            @for (int q = 0; q < @ViewBag.Years.Count; q++)
+                            {
+                                <option>@ViewBag.Years[q]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row"><br /></div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <select class="form-control" id="Month2" name="Month2">
+                            <option> </option>
+                            @foreach (var item in ViewBag.Months)
+                            {
+                                <option value="@item">@month[int.Parse(item)]</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="Year2" name="Year2">
+                            <option> </option>
+                            @for (int q = 0; q < @ViewBag.Years.Count; q++)
+                            {
+                                <option>@ViewBag.Years[q]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row"><br /></div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <select class="form-control" id="Month3" name="Month3">
+                            <option> </option>
+                            @foreach (var item in ViewBag.Months)
+                            {
+                                <option value="@item">@month[int.Parse(item)]</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="Year3" name="Year3">
+                            <option> </option>
+                            @for (int q = 0; q < @ViewBag.Years.Count; q++)
+                            {
+                                <option>@ViewBag.Years[q]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="form-group row">
+            <div class="col-lg-8 col-md-10">
+                <input type="submit" value="Generate Report" class="btn btn-primary pull-right" />
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu7").className += "active";
+});
+</script>

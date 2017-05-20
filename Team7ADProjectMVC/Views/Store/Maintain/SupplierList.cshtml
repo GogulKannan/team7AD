@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Supplier>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "List of Suppliers";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Edwin
+}
+
+<div class="row">
+    <div class="col-md-8">
+        Maintain and add new suppliers to this list.
+        </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary pull-right" onclick="window.location.href='AddSupplier'">
+            Create
+        </button>
+
+    </div>
+</div>
+<br />
+
+<div>
+    <table class="table">
+        <tr>
+            <th class="col-md-2">
+                Supplier Name (Supp. Code)
+            </th>
+            <th class="col-md-2">
+                Contact Person / Phone
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.FaxNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="clickable-row" data-href="Supplier/@item.SupplierId">
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierName) <br />(@Html.DisplayFor(modelItem => item.SupplierCode))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName) <br /> @Html.DisplayFor(modelItem => item.PhNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FaxNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+    <script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+        document.getElementById("menu6").className += "active";
+    });
+    </script>
+

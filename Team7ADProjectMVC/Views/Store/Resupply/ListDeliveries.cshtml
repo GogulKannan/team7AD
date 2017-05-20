@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Delivery>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Deliveries";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    string printLine = null;
+
+    //Author: Edwin
+}
+
+
+<div class="container-fluid">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Supplier Name
+                </th>
+                <th>
+                    Order Date
+                </th>
+                <th>
+                    Delivered On
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="clickable-row" data-href="DeliveryDetails/@item.DeliveryId">
+                    <td>
+                        @item.PurchaseOrder.Supplier.SupplierName
+                    </td>
+                    <td>
+                        @item.PurchaseOrder.OrderDate.Value.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        
+                        @if (item.DeliveredDate == null) { printLine = "Outstanding"; }
+                        else { printLine = item.DeliveredDate.Value.ToString("dd/MM/yyyy"); }
+                         @printLine
+                        @{ printLine = null;}
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<script>
+        $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+        document.getElementById("menu4").className += "active";
+    });
+
+</script>

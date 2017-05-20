@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Team7ADProjectMVC.AdjustmentDetail>
+@{
+    ViewBag.Title = "View Detail";
+    Layout = "~/_Layout1.cshtml";
+    Page.title = "Adjustment Details";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Chun Xiao
+}
+<h3>Adjustment Status: @ViewBag.status</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inventory.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        @Html.DisplayNameFor(model => model.Adjustment.AdjustmentId)
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+
+        </tr>
+    }
+</table>
+<h3>Total Sum: <u>$ @ViewBag.sum </u></h3>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-7"></div><div class="col-md-5 text-right">
+            @if (currentEmployee.Role.Name == "Store Supervisor" && @ViewBag.status == "Pending Approval")
+            {
+                if (@ViewBag.sum < 250)
+                {
+                    <input type="submit" value="Approve" name="result" class="btn btn-success" onclick="return confirm('Are you sure to Approve?');" />
+                    <input type="submit" value="Reject" name="result" class="btn btn-danger" onclick="return confirm('Are you sure to Reject?');" />
+
+                }
+                else
+                {
+                    <input type="submit" value="Forward To Manager" class="btn btn-danger" />
+
+                }
+            }
+            @if (currentEmployee.Role.Name == "Store Manager" && @ViewBag.status == "Pending Final Approval")
+            {
+
+                <input type="submit" value="Approve" name="result" class="btn btn-success" onclick="return confirm('Are you sure to Approve?');" />
+                <input type="submit" value="Reject" name="result" class="btn btn-danger" onclick="return confirm('Are you sure to Reject?');" />
+
+            }
+            <button class="btn btn-default" type="button" onclick="window.history.back()">Back</button>
+        </div>
+
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        document.getElementById("menu8").className += "active";
+    });
+</script>

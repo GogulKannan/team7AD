@@ -1,0 +1,205 @@
+﻿@model Team7ADProjectMVC.Employee
+
+@{
+    //Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Page.Title = "Delegate Acting Department-Head";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Sandi
+}
+
+@*<script type="text/javascript">
+        $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+    </script>*@
+
+<form role="form" action="/Head/ManageDelegation" onsubmit="return confirm('Are you sure you want to confirm?');">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            Delegated to : <label value="employeeName">@ViewBag.emp </label><br />
+        </div>
+    </div>
+
+    <div class="row">
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="col-md-4">
+                Start Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div id="datetimepicker1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>Start Date: <label id="s1" value="startDate">@ViewBag.s1</label></div>
+                
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                End Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div id="datetimepicker2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>End Date: <label id="e1" value="endDate">@ViewBag.e1</label></div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+
+
+
+    <div>
+        
+
+
+            <input type="hidden" name="startDate" id="startDate" />
+            <input type="hidden"  name="endDate" id="endDate" /> 
+
+        
+
+       <input type="hidden" value= "@ViewBag.delegateId"  name="DelegateId" />
+        <input type="hidden" value="@ViewBag.empid  " name="empId" />
+        
+        
+
+            @*@if (Request["DelegateID"].Equals(null) && Request["empId"].Equals(null))
+            {
+                <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate">
+                    Terminate
+                </button>
+            }
+            else
+            {*@
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-lg-3 col-md-6">
+                <button type="submit" class="btn btn-success btn-lg" name="status" value="Update" id="updatebutton">
+                    Update
+                </button>
+           
+                <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" id="terminatebutton">
+                    Terminate
+                </button>
+            </div>
+        </div>
+          
+          
+                @*}*@
+           
+
+
+
+    </div>
+</form>
+    </>
+
+
+@if (ViewBag.s2 < DateTime.Today)
+{
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY',
+                inline: true,
+                sideBySide: false,
+                minDate: '@ViewBag.s2',
+                date: '@ViewBag.s2',
+                maxDate: '@ViewBag.s2'
+
+        });
+
+
+            $("#datetimepicker1").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker1').data("DateTimePicker").date());
+                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'DD/MM/YYYY',
+                inline: true,
+                sideBySide: false,
+                minDate:new Date(),
+                date: '@ViewBag.e2'
+
+            });
+
+            $("#datetimepicker2").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker2').data("DateTimePicker").date());
+                $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            });
+
+        });
+</script>
+}
+else
+{
+    <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YY',
+                inline: true,
+                sideBySide: false,
+                minDate: new Date(),
+                date: '@ViewBag.s2'
+            });
+
+            $("#datetimepicker1").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker1').data("DateTimePicker").date());
+                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'DD/MM/YY',
+                inline: true,
+                sideBySide: false,
+                minDate: '@ViewBag.s2',
+                date: '@ViewBag.e2'
+
+            });
+
+            $("#datetimepicker2").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker2').data("DateTimePicker").date());
+                $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            });
+
+    });
+    //    $(document).ready(function () {
+    //        $('#updatebutton').click(function () {
+    //            alert("Successfully Updated");
+    //        })
+    //    });
+    //    $(document).ready(function () {
+    //        $('#terminatebutton').click(function () {
+    //            alert("Successfully Terminated");
+    //        })
+    //    });
+    </script>
+   
+}
+
+
+
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu15").className += "active";
+});
+</script>

@@ -1,0 +1,153 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Inventory>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Generate Purchase Orders";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+<h2>Add Item to List</h2>
+<form method="get" action="AddAdhocPOItem">
+    <div class="row">
+        <div class="col-md-5">
+            <select id="searchByCategory" name="inventoryId"
+                    class="selectpicker show-tick form-control"
+                    data-live-search="true" title="Category">
+                @foreach (Inventory i in ViewBag.InventoryItems)
+            {
+                    <option value="@i.ItemNo">@i.Description</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-1">
+            <input type="submit" class="btn btn-success" value="Add item" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            *Each item may only be added once. Please add all items before entering the quantities required.
+        </div>
+    </div>
+    
+</form>
+<hr />
+    <h2>Adhoc Purchase Order Items</h2>
+    <form method="get" action="GeneratePurchaseOrders">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Item Code
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    On hand
+                </th>
+                <th>
+                    Re-order level
+                </th>
+                <th>
+                    Supplier 1
+                </th>
+                <th>
+                    Supplier 2
+                </th>
+                <th>
+                    Supplier 3
+                </th>
+                <th>
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-md-1">
+                        @item.ItemNo
+                    </td>
+                    <td class="col-md-2">
+                        @item.Description
+                    </td>
+                    <td class="col-md-1">
+                        @item.Quantity
+                    </td>
+                    <td class="col-md-1">
+                        @item.ReorderLevel
+                    </td>
+                    <td class="col-md-2">
+                        <a href="#" data-toggle="tooltip" title="Tel. @item.Supplier.PhNo (@item.Supplier.ContactName)">@item.Supplier.SupplierName</a>
+                        <br />
+                        <input type="hidden" name="itemNo" value="@item.ItemNo" />
+                        <input type="hidden" name="supplier" value="@item.SupplierId1" />
+                        <input type="number" class="form-control" name="orderQuantity" />
+                    </td>
+                    <td class="col-md-2">
+                        <a href="#" data-toggle="tooltip" title="Tel. @item.Supplier1.PhNo (@item.Supplier1.ContactName)">@item.Supplier1.SupplierName</a>
+                        <br />
+                        <input type="hidden" name="itemNo" value="@item.ItemNo" />
+                        <input type="hidden" name="supplier" value="@item.SupplierId2" />
+                        <input type="number" class="form-control" name="orderQuantity" />
+                    </td>
+                    <td class="col-md-2">
+                        <a href="#" data-toggle="tooltip" title="Tel. @item.Supplier2.PhNo (@item.Supplier2.ContactName)">@item.Supplier2.SupplierName</a>
+                        <br />
+                        <input type="hidden" name="itemNo" value="@item.ItemNo" />
+                        <input type="hidden" name="supplier" value="@item.SupplierId3" />
+                        <input type="number" class="form-control" name="orderQuantity" />
+                    </td>
+                    <td class="col-md-1"  style="vertical-align:middle">
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='DeleteItem?inventoryId=@item.ItemNo'">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h5>Mouse over supplier for contact details.</h5>
+    <div class="row">
+        <div class="col-md-8"></div><div class="col-md-3">
+            <input type="submit" class="btn btn-primary" value="Generate Purchase Orders" />
+        </div>
+    </div>
+</form>
+
+<div>
+    @if (ViewBag.Error != null)
+    {
+    <!-- Show warning message -->
+        <div id="ErrorMessage" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">We were unable to fulfill your request</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>@ViewBag.Error.Message</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function ShowModal() {
+                $('#ErrorMessage').modal('toggle');
+            });
+        </script>
+    }
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    document.getElementById("menu3").className += "active";
+});
+</script>

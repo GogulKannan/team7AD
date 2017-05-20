@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Team7ADProjectMVC.DisbursementDetail>
+
+@{
+    ViewBag.Title = "ViewDisbursementDetail";
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Disbursement List for " + @ViewBag.DisbursementList.Department.DepartmentName;
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Chun Xiao
+}
+
+<h3>Collection Point: @ViewBag.Cpname (@ViewBag.Cptime)</h3>
+
+
+<div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveredQuantity)
+            </th>
+
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.PreparedQuantity != 0)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inventory.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredQuantity)
+                </td>
+            </tr>
+            }
+        }
+
+    </table>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                @if (@ViewBag.status != "Completed")
+                {
+                    
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Confirm" class="btn btn-success" onclick="return confirm('Are you sure to Confirm?'); "/>
+                            <button type="button" class="btn btn-default" onclick="window.history.back()">Back</button>
+                        </div>
+
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" onclick="window.history.back()">Back</button>
+                }
+            </div>
+        </div>
+    }
+
+    <br />
+    <br />
+    
+
+</div>
+<script>
+$(document).ready(function(){
+    document.getElementById("menu14").className += "active";
+});
+</script>

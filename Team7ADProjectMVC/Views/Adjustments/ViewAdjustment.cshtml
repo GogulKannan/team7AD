@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<Team7ADProjectMVC.Adjustment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Inventory Adjustment";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Chun Xiao
+}
+@using PagedList.Mvc;
+
+<h2>Adjustment Voucher</h2>
+<hr />
+<div class="container-fluid">
+    <div class="navbar navbar-default row">
+
+        <form class="form" role="form" action="SearchAdjustment" method="get">
+            <div class="form-group">
+                @Html.Label("Raised by", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-3 ">
+                    @Html.DropDownList("employee", null, "-- Please Select --", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Date Issued", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control" placeholder="DD/MM/YYYY" name="date" id="date" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2 ">
+                    @Html.DropDownList("status", null, "All Statuses", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-1">
+                    <button class="btn btn-success" type="submit">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Raised By
+            </th>
+            <th>
+                Created On
+            </th>
+            <th>
+                Approval Status
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class='clickable-row' data-href="ViewAdjustmentDetail/@item.AdjustmentId">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
+                </td>
+                <td>
+
+                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.AdjustmentDate))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("ViewAdjustment",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</center>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY',
+
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        document.getElementById("menu9").className += "active";
+    });
+</script>

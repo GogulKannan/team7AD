@@ -1,0 +1,83 @@
+﻿@model Team7ADProjectMVC.Department
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Department</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FaxNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaxNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HeadName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HeadName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectionPoint.PlaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CollectionPoint.PlaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.EmployeeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.EmployeeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

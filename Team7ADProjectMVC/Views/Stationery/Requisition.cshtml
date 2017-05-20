@@ -1,0 +1,153 @@
+﻿@model Team7ADProjectMVC.Requisition
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Requisition";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        @{
+
+                            string[] D = Model.OrderedDate.ToString().Split(' ');
+                            string[] sd = D[0].Split('/');
+                            ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2];
+                        }
+                        Ordered Date:
+                    </h5>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <h6>
+                        @ViewBag.showDate
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        Department Name:
+                    </h5>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <h6>
+                        @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        Employee Name:
+                    </h5>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <h6>
+                        @Html.DisplayFor(model => model.Employee.EmployeeName)
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        Employee Email Address:
+                    </h5>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <h6>
+                        <a href="mailto: @Model.Employee.Email">@Html.DisplayFor(model => model.Employee.Email)</a>
+                        <br />
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        Approval Status:
+                    </h5>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <h6>
+                        @Model.RequisitionStatus
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <h5>
+                        Approver's Remarks:
+                    </h5>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    @Model.Comment
+                    @if (Model.Comment==null)
+                    { <h6>Nil</h6>}
+                </div>
+            </div>
+
+
+
+
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-lg-8">
+            <span class="label label-default"></span>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.RequisitionDetails)
+                    {
+                        <tr>
+                            <td>
+                                @item.Inventory.Description
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-7"></div>
+                <div class="col-md-1 col-lg-1">
+                    <button class="btn btn-default" onclick="window.history.back()">Back</button>
+                </div>
+            
+        </div>
+    </div>
+
+
+</div>
+<script>
+    jQuery(document).ready(function ($) {
+       
+        document.getElementById("menu10").className += "active";
+    });
+
+
+</script>

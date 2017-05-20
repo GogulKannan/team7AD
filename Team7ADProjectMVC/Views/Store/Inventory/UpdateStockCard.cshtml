@@ -1,0 +1,184 @@
+﻿@model Team7ADProjectMVC.Inventory
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Update Stock Card - " + @ViewBag.inv.ItemNo + " " + @ViewBag.inv.Description;
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Edwin
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ItemNo, "Item No.", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control", required = "true", title = "A unique item code is required.", @readonly= "true" } })
+                @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CategoryId, "Category Id", htmlAttributes: new { @class = "control-label", @selectedvalue = "none" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", required = "true", title = "Please enter a description" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.BinNo, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.BinNo, new { htmlAttributes = new { @class = "form-control", required = "true", title = "Please enter a bin number" } })
+                @Html.ValidationMessageFor(model => model.BinNo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MeasurementId, "Unit", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("MeasurementId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MeasurementId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ReorderLevel, "Reorder Level", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ReorderLevel, new { htmlAttributes = new { @class = "form-control", @value = "0", required = "true", title = "Please enter the reorder level" } })
+                @Html.ValidationMessageFor(model => model.ReorderLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ReorderQuantity, "Reorder Quantity", htmlAttributes: new { @class = "control -label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ReorderQuantity, new { htmlAttributes = new { @class = "form-control", required = "true", title = "Please enter a re-order quantity" } })
+                @Html.ValidationMessageFor(model => model.ReorderQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Quantity must be a number." id="Quantity" name="Quantity" type="number" value="0" readonly>
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.HoldQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" data-val="true" data-val-number="The field HoldQuantity must be a number." id="HoldQuantity" name="HoldQuantity" type="number" value="0" readonly>
+                @Html.ValidationMessageFor(model => model.HoldQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId1, "Supplier 1", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId1", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId1, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price1, "Supplier 1 Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price1, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+                @Html.ValidationMessageFor(model => model.Price1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId2, "Supplier 2", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId2", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId2, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price2, "Supplier 2 Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price2, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+                @Html.ValidationMessageFor(model => model.Price2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId3, "Supplier 3", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId3", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId3, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price3, "Supplier 3 Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price3, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+                @Html.ValidationMessageFor(model => model.Price3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-2 pull-right"></div>
+                <div class="col-md-3 pull-right">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/Store/Inventory'">Back to Inventory</button>
+                </div>
+            </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu5").className += "active";
+});
+</script>

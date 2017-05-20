@@ -1,0 +1,164 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Employee>
+
+@{
+    //Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Page.Title = "Delegate Acting Department-Head";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Sandi
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <form role="form" action="/Head/ManageDelegation" onsubmit="return confirm('Are you sure to make delegation?');">
+            <div class="row">
+                <div class="col-lg-4 col-xs-12">
+                    
+                    
+                        <h3> Choose an Employee:</h3> 
+                    
+                        <select id="empListPicker" name="empId"
+                                class="selectpicker show-tick form-control"
+                                data-live-search="true" title="Select employee to delegate" required>
+                            @foreach (var emp in ViewBag.empList)
+                            {
+                                <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                            }
+
+                        </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <br />
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h3> Start Date: </h3>
+                    <div style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div id="datetimepicker1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div> Start Date:  <label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label></div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <h3> End Date: </h3> 
+                    <div style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div id="datetimepicker2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div> End Date: <label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br /></div>
+                </div>
+            </div>
+           
+
+
+            <br />
+            <br />
+
+
+
+            <h5>
+
+               
+                <input type="hidden" name="startDate" id="startDate" value="@ViewBag.autoStartdate" />
+                <input type="hidden" name="DelegateId" id="delegateId" value="0" />
+                <input type="hidden" name="endDate" id="endDate" value="@ViewBag.autoEnddate" />
+
+
+            </h5>
+            <div class="row">
+                <div class="col-md-7">
+                    <h5 style="color :red"> *The default delegation period has been set for one week from today. Click above to set the desired dates.</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-success btn-lg pull-right" name="status" value="Delegate" id="submitButton">
+                        Delegate
+                    </button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY',
+            inline: true,
+            sideBySide: false,
+            minDate: new Date()
+        });
+
+        $("#datetimepicker1").on("dp.change", function (date, e) {
+            {
+                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
+
+                //var da = $('#datetimepicker1').data("DateTimePicker").date().format('YYY-MM-DD').toString();
+                //String s=(String)da.toString();
+            }
+
+        });
+
+        $('#datetimepicker2').datetimepicker({
+            format: 'DD/MM/YYYY',
+            inline: true,
+            sideBySide: false,
+            minDate: new Date(),
+            date: '@ViewBag.endDate'
+        });
+
+
+        $("#datetimepicker2").on("dp.change", function (date, e) {
+            console.log($('#datetimepicker2').data("DateTimePicker").date());
+            $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+
+        });
+    });
+
+
+
+    //$(document).ready(function () {
+
+    //    $("#datetimepicker1").on("click", function ()
+    //     {
+    //         alert('The start date must be current date or after current date');
+    //     });
+
+    // });
+
+
+
+</script>
+
+
+<script>
+$(document).ready(function(){
+    document.getElementById("menu15").className += "active";
+});
+</script>

@@ -1,0 +1,111 @@
+﻿
+
+@model Team7ADProjectMVC.Adjustment
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Inventory Adjustment";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Chun Xiao
+}
+@using Team7ADProjectMVC.Extensions
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.EditorFor(x => x)
+    </div>
+    <h3>Adjustment Details </h3>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <div class="col-md-3  ">ItemNo</div>
+                </th>
+                <th>
+                    <div class="col-md-3 ">Quantity</div>
+                </th>
+                <th>
+                    <div class="col-md-3 ">Reason</div>
+                </th>
+                <th>
+                    <div class="col-md-3 "></div>
+                </th>
+            </tr>
+        <thead />
+    </table>
+
+        <div id="detail-list">
+            @Html.EditorForMany(x => x.AdjustmentDetails)
+        </div>
+        <hr />
+        <h5 style="color :red"> *For adjustments that reduce the inventory totals, please include a negative sign '-' before the adjustment quantity.</h5>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12 text-right">
+
+                    <button type="button" id="add-detail" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Another Item</button>
+                    <input type="submit" value="Submit For Approval" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+}
+<br />
+
+<div>
+    @if (ViewBag.ErrorMsg != null)
+    {
+     //Show warning message 
+        <div id="ErrorMessage" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Failed to create New Adjustment</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5>@ViewBag.ErrorMsg</h5>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function ShowModal() {
+                $('#ErrorMessage').modal('toggle');
+            });
+        </script>
+    }
+</div>
+
+<script>    //add a new row
+    jQuery(document).ready(function ($) {                           
+        $('#add-detail').on('click', function () {
+            jQuery.get('/Adjustments/AddDetail').done(function (html) {
+                $('#detail-list').append(html);
+            });
+
+        });
+        document.getElementById("menu8").className += "active";
+    });
+</script>
+<script type="text/javascript">//deleted a row
+    $(document).ready(function () {
+        $('#detail-list').on('click', '.delete-detail', function () {
+            var EntryToRemove = $(this).closest('.editorRow');
+            EntryToRemove.prev('input[type=hidden]').remove();
+            EntryToRemove.remove();
+        });
+
+    });
+</script>

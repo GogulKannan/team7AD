@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e5d044390176492890013175df003707" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectModel.Adjustment" Width="1.5" PointX="10.125" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.AdjustmentDetail" Width="1.5" PointX="8.375" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Category" Width="1.5" PointX="3.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.CollectionPoint" Width="1.5" PointX="3.625" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Delegate" Width="1.5" PointX="5.875" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Delivery" Width="1.5" PointX="7.875" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.DeliveryDetail" Width="1.5" PointX="9.875" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Department" Width="1.5" PointX="8" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.DisbursementDetail" Width="1.5" PointX="10.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.DisbursementList" Width="1.5" PointX="7.875" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Employee" Width="1.5" PointX="5.875" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Inventory" Width="1.5" PointX="1.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.ItemCodeGenerator" Width="1.5" PointX="12.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Measurement" Width="1.5" PointX="5.875" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Notification" Width="1.5" PointX="5.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.PurchaseDetail" Width="1.5" PointX="12.125" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.PurchaseOrder" Width="1.5" PointX="12.125" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Requisition" Width="1.5" PointX="5.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.RequisitionDetail" Width="1.5" PointX="3.625" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Retrieval" Width="1.5" PointX="3.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Role" Width="1.5" PointX="3.625" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Supplier" Width="1.5" PointX="1.625" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.disbAnalysi" Width="1.5" PointX="10.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.StockCard" Width="1.5" PointX="8" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="ProjectModel.AdjustmentDetailAdjustmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.AdjustmentEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.AdjustmentDetailItemNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.CategoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.CollectionPointId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.eid" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DelegateEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DeliveryDetailDeliveryId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DeliveryEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseOrderId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DeliveryDetailItemNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DepartmentHeadId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DisbursementListDepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DisbursementDetailItemNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DisbursementListId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RetrievalId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseOrderAuthorizedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseOrderEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RequisitionEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RetrievalEmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.MeasurementId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseDetailItemNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RequisitionDetailItemNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.SupplierId1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.SupplierId2" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.SupplierId3" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseDetailPurchaseOrderId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseDetailSupplierId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseOrderSupplierId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RequisitionId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.RequisitionRetrievalId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Requisitions";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Currently Active Retrieval List</h3>
+    </div>
+</div>
+
+<div class="row">
+    
+        <br />
+        @if (ViewBag.rList.requisitionList != null)
+        {
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-danger" onclick="window.location.href='ClearRetrievalList'">Clear Retrieval List</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4">
+                <h5>There are no active retrievals at this time.</h5>
+            </div>
+        }
+
+        @if (ViewBag.rList.requisitionList == null && Model.Count() > 0)
+        {
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-success" onclick="window.location.href='GenerateRetrievalList'">Generate Retrieval List</button>
+            </div>
+        }
+        else if (ViewBag.rList.requisitionList != null)
+        {
+            <div class="col-md-4">
+                <h5>There is an active retrieval list.</h5>
+            </div>
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-success" onclick="window.location.href='RetrievalList'">View Retrieval List</button>
+            </div>
+        }
+       
+    </div>
+</div>
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h3>Requisitions that require your attention</h3>
+    </div>
+</div>
+@if (Model.Count() > 0)
+{
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-3">
+                    Department
+                </th>
+                <th class="col-md-2">
+                    Date Approved
+                </th>
+                <th class="col-md-2">
+                    Requisition Status
+                </th>
+                <th class="col-md-3">
+                    Items Required
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.Department.DepartmentName)
+                    </td>
+                    <td>
+                        @item.ApprovedDate.Value.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequisitionStatus)
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (RequisitionDetail r in item.RequisitionDetails)
+                            {
+                                if (r.OutstandingQuantity > 0)
+                                {
+                                <li>@r.Inventory.Description (Qty: @r.OutstandingQuantity)</li>
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+else
+{
+    <h4>Yay! There are no pending requisitions at this time.</h4>
+}
+<script>
+$(document).ready(function(){
+    
+    document.getElementById("menu1").className += "active";
+});
+</script>

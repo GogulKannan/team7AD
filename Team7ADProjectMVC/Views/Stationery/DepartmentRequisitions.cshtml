@@ -1,0 +1,122 @@
+﻿@model PagedList.IPagedList<Team7ADProjectMVC.Requisition>
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Department Requisitions";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
+    //Author: Edwin
+}
+@using PagedList.Mvc;
+<div class="container-fluid" id="searchBar">
+    <nav class="navbar navbar-default">
+        <form class="navbar-form row" role="form" action="/Stationery/DepartmentRequisitions" method="get">
+            <div class="form-group col-md-3">
+                <select id="searchByEmployee" name="employeeId"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Employee">
+                    @foreach (Employee e in ViewBag.Employees)
+                    {
+                        <option value="@e.EmployeeId">@e.EmployeeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" placeholder="Date Ordered" name="dateOrderedString" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+            </div>
+            <div class="form-group col-md-3">
+                <select id="searchByStatus" name="status"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Status">
+                    <option>Pending Approval</option>
+                    <option>Processing</option>
+                    <option>Approved</option>
+                    <option>Outstanding</option>
+                    <option>Rejected</option>
+                    <option>Completed</option>
+
+                </select>
+            </div>
+
+            <button class="btn btn-success" type="submit">
+                Search
+            </button>
+            @if (ViewBag.canCreate)
+            {
+            <button class="btn btn-primary" type="button" onclick="window.location.href='/Stationery/EmployeeRequisition'">
+                Create
+            </button>
+            }
+            <button class="btn btn-default" type="button" onclick="window.location.href = '/Stationery/DepartmentRequisitions'">
+                Show All
+            </button>
+        </form>
+    </nav>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Requested By
+                </th>
+                <th>
+                    Date Ordered
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="clickable-row" data-href="Requisition/@item.RequisitionId">
+                    <td>@item.Employee.EmployeeName</td>
+                    <td>@item.OrderedDate.Value.ToString("dd MMM yyyy")</td>
+                    <td>@item.RequisitionStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("DepartmentRequisitions",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</center>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+        $('#datetimepicker2').datetimepicker({ format: 'DD/MM/YYYY' });
+    });
+
+    $(document).ready(function ($) {
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $('#searchByEmployee').selectpicker('val', getUrlVars()["employeeId"]);
+        var date1 = unescape(getUrlVars()["dateOrderedString"]);
+        $('#datetimepicker1').data("DateTimePicker").date(date1);
+
+        document.getElementById("menu10").className += "active";
+    });
+</script>

@@ -1,0 +1,134 @@
+﻿
+@model Team7ADProjectMVC.Department
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Change Collection Point";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Chun Xiao
+}
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.silver.min.css" />
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.mobile.all.min.css" />
+
+@*<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>*@
+<script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DepartmentId)
+
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.DepartmentName, "Department Name", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.DepartmentName)
+                @Html.ValidationMessageFor(model => model.DepartmentName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            @Html.LabelFor(model => model.CollectionPointId, "Current Collection Point", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.CollectionPoint.PlaceName)  (@Html.DisplayFor(model => model.CollectionPoint.CollectTime))
+                @Html.ValidationMessageFor(model => model.CollectionPointId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-md-4" for="form">New Collection Point</label>
+
+
+            <div class="col-md-5" id="form">
+
+                <input type="radio" name="radio" required hidden /><br />
+                @foreach (var item in ViewBag.Message)
+                {
+                    <input type="radio" name="radio" value="@item.CollectionPointId" required > @item.PlaceName   <label>( @item.CollectTime )</label> <br />
+                }
+            </div>
+
+        </div>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-4"></div><div class="col-md-4 text-right">
+                <input type="submit" value="Save" class="btn btn-success " id="post" />
+
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @if (ViewBag.Error != null)
+    {
+    <!-- Show warning message -->
+        <div id="ErrorMessage" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Failed to update Collection Point</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5>@ViewBag.Error.Message</h5>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function ShowModal() {
+                $('#ErrorMessage').modal('toggle');
+            });
+        </script>
+    }
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        document.getElementById("menu13").className += "active";
+    });
+</script>
+
+<script> // validate if chose a collection point before saving
+    $(function () {
+        var validator = $("#form").kendoValidator({
+            rules: {
+                radio: function (input) {
+                    if (input.filter("[type=radio]") && input.attr("required")) {
+                        return $("#form").find("[type=radio]").is(":checked");
+                    }
+                    return true;
+                }
+            },
+            messages: {
+                radio: "Please select a new collection"
+            }
+        }).getKendoValidator();
+
+        $("#post").click(function () {
+            validator.validate();
+        });
+    });
+</script>
+
+
+

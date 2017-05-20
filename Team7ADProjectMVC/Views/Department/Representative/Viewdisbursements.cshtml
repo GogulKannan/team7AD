@@ -1,0 +1,137 @@
+﻿<!--  jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+@model PagedList.IPagedList<Team7ADProjectMVC.DisbursementList>
+
+@{
+    ViewBag.Title = "View Disbursement";
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Disbursement Lists";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    //Author: Chun Xiao
+}
+
+@using PagedList.Mvc;
+
+<div class="container-fluid">
+
+    <div class="navbar navbar-default">
+        <form role="form" class="navbar-form row" action="SearchDisbursements">
+            <div class="form-group col-md-offset-1  col-md-4 ">
+
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar">
+                        </i>
+                    </div>
+                    <input class="form-control" id="date" name="date" placeholder="Delivery Date (DD/MM/YYYY)" type="text" />
+                </div>
+
+            </div>
+
+
+            <div class="form-group col-md-3">
+                <select id="statusPicker" name="status"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Status">
+                    <option>Processing</option>
+                    <option>Completed</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-offset-1 col-md-2">
+                <button class="btn btn-success" type="submit">
+                    Search
+                </button>
+            </div>
+
+
+
+
+        </form>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>
+                    Department Name
+                </th>
+                <th>
+                    Delivery Date
+                </th>
+                <th>
+                    Collection Point
+                </th>
+                <th>
+                    Collection Time
+                </th>
+
+                <th>
+                    Disbursement Status
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                <tr class='clickable-row' data-href="ViewDisbursementDetail/@item.DisbursementListId">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                    </td>
+
+                    <td>
+
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DeliveryDate))
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.CollectionPoint.PlaceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.CollectionPoint.CollectTime)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                </tr>
+
+            }
+
+        </table>
+    </div>
+</div>
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Viewdisbursements",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</center>
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+            format: 'dd/mm/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+            clearBtn: true,
+        };
+        date_input.datepicker(options);
+        document.getElementById("menu14").className += "active";
+
+    })
+
+</script>
